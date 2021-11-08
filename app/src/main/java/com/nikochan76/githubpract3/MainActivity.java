@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private TextView mTextView;
     private TextView mTextView2;
+    private TextView UserNameGet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mTextView2 = (TextView) findViewById(R.id.reposUsersTxt);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.INVISIBLE);
+        UserNameGet = (TextView) findViewById(R.id.gitusername);
     }
 
     public void onClick(View view) {
