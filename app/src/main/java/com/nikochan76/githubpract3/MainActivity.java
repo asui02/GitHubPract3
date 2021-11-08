@@ -20,12 +20,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
     private TextView mTextView;
+    private TextView mTextView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTextView = (TextView) findViewById(R.id.txtInfo);
+        mTextView2 = (TextView) findViewById(R.id.reposUsersTxt);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.INVISIBLE);
     }
@@ -69,6 +71,26 @@ public class MainActivity extends AppCompatActivity {
                          }
                      }
         );
+    }
+    public void onClickReposUsers(View view) {
+        mProgressBar.setVisibility(View.VISIBLE);
+        GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
+        final Call<List<Contributor>> call =
+                gitHubService.repoContributors("square", "picasso");
+
+        call.enqueue(new Callback<List<Contributor>>() {
+            @Override
+            public void onResponse(Call<List<Contributor>> call, Response<List<Contributor>> response) {
+                mTextView2.setText(response.body().toString());
+                mProgressBar.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<List<Contributor>> call, Throwable throwable) {
+                mTextView2.setText("Что-то пошло не так: " + throwable.getMessage());
+                mProgressBar.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
 }
